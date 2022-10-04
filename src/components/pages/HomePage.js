@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Card from './Card';
+import Card from '../generics/Card';
 
-export default function Home() {
+export default function HomePage() {
   return (
     <Style>
       <h1>Selecione o filme</h1>
@@ -13,11 +13,17 @@ export default function Home() {
 }
 
 const Style = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 67px;
+  margin-bottom: 117px;
+  padding: 32px 0;
 
   h1 {
     font-size: 24px;
-    padding: 36px 0;
+    margin-bottom: 36px;
     text-align: center;
   }
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import imgTest from "../assets/img/img-card.png"
+import imgTest from "../../assets/img/img-card.png"
 
 export default function Card({width, height, img}) {
   return (

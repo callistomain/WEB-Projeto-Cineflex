@@ -1,17 +1,29 @@
 import GlobalStyled from "./GlobalStyled";
-import Header from "./Header";
-import Home from "./Home";
-import Schedule from './Schedule';
-import Seats from "./Seats";
+import Header from "./generics/Header";
+import HomePage from "./pages/HomePage";
+import SchedulePage from "./pages/SchedulePage";
+import SeatsPage from "./pages/SeatsPage";
+import SuccessPage from "./pages/SuccessPage";
+import { useState } from "react";
 
 export default function App() {
+  const [page, setPage] = useState("home");
+
+  function renderPage() {
+    switch (page) {
+      case "home": return <HomePage/>;
+      case "schedule": return <SchedulePage/>;
+      case "seats": return <SeatsPage/>;
+      case "success": return <SuccessPage/>;
+      default: return <HomePage/>;
+    }
+  }
+
   return (
     <>
       <GlobalStyled/>
       <Header/>
-      {/* <Home/> */}
-      {/* <Schedule/> */}
-      <Seats/>
+      {renderPage()}
     </>
   );
 }

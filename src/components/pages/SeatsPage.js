@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import imgTest from "../assets/img/img-card.png"
+import imgTest from "../../assets/img/img-card.png"
 
 const arr = Array.apply(null, Array(50))
-export default function Seats() {
+export default function SeatsPage() {
   return (
     <Style>
       <h1>Selecione o(s) assento(s)</h1>

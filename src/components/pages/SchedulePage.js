@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import imgTest from "../assets/img/img-card.png"
+import imgTest from "../../assets/img/img-card.png"
 
-export default function Schedule() {
+export default function SchedulePage() {
   return (
     <Style>
       <h1>Selecione o horário</h1>
@@ -20,11 +20,17 @@ export default function Schedule() {
 }
 
 const Style = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 67px;
+  margin-bottom: 117px;
+  padding: 32px 0;
 
   h1 {
     font-size: 24px;
-    padding: 36px 0;
+    margin-bottom: 36px;
     text-align: center;
   }
 `;
@@ -32,8 +38,9 @@ const Style = styled.main`
 const Day = styled.div`
   display: flex;
   flex-wrap: wrap;
+  width: 100vw;
   gap: 10px;
-  padding: 0 25px;
+  padding: 0 36px;
   
   h2 {
     font-size: 20px;
@@ -41,19 +48,6 @@ const Day = styled.div`
     margin-bottom: 20px;
   }
 `
-
-const Button = styled.button`
-  font-family: 'Roboto', sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 83px;
-  height: 43px;
-  background-color: #E8833A;
-  border-radius: 3px;
-  font-size: 18px;
-  color: white;
-`;
 
 const Footer = styled.footer`
   display: flex;
