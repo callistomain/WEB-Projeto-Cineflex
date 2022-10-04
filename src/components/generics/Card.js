@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import imgTest from "../../assets/img/img-card.png"
 
-export default function Card({width, height, img}) {
+export default function Card({width, height, img, onClick}) {
   return (
-    <Style width={width} height={height}>
-      <img src={imgTest} alt="" />
+    <Style onClick={onClick} width={width} height={height}>
+      <img src={img} alt="" />
     </Style>
   );
 }
