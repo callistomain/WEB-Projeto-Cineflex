@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 
 const url = "https://mock-api.driven.com.br/api/v5/cineflex/movies";
 
-export default function HomePage() {
+export default function HomePage({setInfo}) {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
     axios.get(url)
@@ -26,7 +26,7 @@ export default function HomePage() {
       <ul>
         {movies.map(e =>
           <Link key={e.id} to={`/sessoes/${e.id}`}>
-            <Card width="145px" height="209px" img={e.posterURL}/>
+            <Card onClick={() => setInfo(info => ({...info, "title":e.title}))} width="145px" height="209px" img={e.posterURL}/>
           </Link>
         )}
       </ul>

@@ -1,34 +1,37 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../generics/Button';
 
 export default function SuccessPage({info}) {
+  const navigate = useNavigate();
+
   if (!info.final) {
     return (
       <div style={{"margin":"200px"}}>Você deve preencher selecionar e preencher os campos.</div>
     );
   }
 
+  const {title, session, seats, name, cpf} = info;
   return (
     <Style>
       <h1>Pedido feito com sucesso!</h1>
       <section>
         <div>
           <h2>Filme e sessão</h2>
-          <p>Enola Holmes</p>
-          <p>24/06/2021 15:00</p>
+          <p>{title}</p>
+          <p>{session}</p>
         </div>
         <div>
           <h2>Ingressos</h2>
-          <p>Assento 15</p>
-          <p>Assento 16</p>
+          {Object.values(seats).map(e => <p>Assento {e}</p>)}
         </div>
         <div>
           <h2>Comprador</h2>
-          <p>Nome: João da Silva Sauro</p>
-          <p>CPF: 123.456.789-10</p>
+          <p>Nome: {name}</p>
+          <p>CPF: {cpf}</p>
         </div>
       </section>
-      <Button>Voltar pra Home</Button>
+      <Button onClick={() => navigate("/")}>Voltar pra Home</Button>
     </Style>
   );
 }

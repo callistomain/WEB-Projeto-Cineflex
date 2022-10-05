@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from "axios";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import SeatsForm from './SeatsForm';
 import SeatsFormItem from './SeatsFormItem';
 import SeatsFooter from './SeatsFooter';
 
-export default function SeatsPage({final, setInfo}) {
-  const [selectedSeats, setSelectedSeats] = useState([]);
+export default function SeatsPage({info, setInfo}) {
+  const [selectedSeats, setSelectedSeats] = useState({});
   const [seats, setSeats] = useState({});
   const { idSessao } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const url = `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`;
@@ -18,16 +19,10 @@ export default function SeatsPage({final, setInfo}) {
     .catch(e => console.log(e.response.data));
   }, [idSessao]);
 
-  function selectSeat(name) {
-    const index = selectedSeats.indexOf(name);
-    if (index === -1) {
-      const seats = [...selectedSeats, name];
-      setSelectedSeats(seats);
-    } else {
-      const seats = [...selectedSeats];
-      seats.splice(index, 1); 
-      setSelectedSeats(seats);
-    }
+  function selectSeat({id, name}) {
+    const obj = {...selectedSeats};
+    obj[id] = selectedSeats[id] ? undefined : name;
+    setSelectedSeats(obj);
   }
 
   // NOT LOADED
@@ -39,7 +34,17 @@ export default function SeatsPage({final, setInfo}) {
 
   function submit(e) {
     e.preventDefault();
-    setInfo(info => ({...info, "seats":selectedSeats, "final":true}));
+    const url = "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many";
+    const values = Object.values(selectedSeats).filter(e => e && e);
+    const keys = Object.keys(selectedSeats).filter(e => selectedSeats[e] && e);
+    const obj = {...info, "seats":values, "final":true, "name":e.target.name.value, "cpf":e.target.cpf.value};
+    setInfo(obj);
+    axios.post(url, {
+      ids: keys,
+      name: obj.name,
+      cpf: obj.cpf.replace(/\D/g,'')
+    }).then(r => console.log(r)).catch(e => console.log(e));
+    navigate("/sucesso");
   }
 
   // LOADED
@@ -49,9 +54,9 @@ export default function SeatsPage({final, setInfo}) {
       <SeatsStyle>
         {seats.seats.map(e => 
           (e.isAvailable)
-          ? (selectedSeats.includes(e.name))
-            ? <Selected pointer={true} key={e.id} onClick={() => selectSeat(e.name)}>{e.name}</Selected>
-            : <Available pointer={true} key={e.id} onClick={() => selectSeat(e.name)}>{e.name}</Available>
+          ? (selectedSeats[e.id])
+            ? <Selected pointer={true} key={e.id} onClick={() => selectSeat(e)}>{e.name}</Selected>
+            : <Available pointer={true} key={e.id} onClick={() => selectSeat(e)}>{e.name}</Available>
           : <Unavailable key={e.id}>{e.name}</Unavailable>
         )}
       </SeatsStyle>
@@ -62,7 +67,7 @@ export default function SeatsPage({final, setInfo}) {
         <div> <Unavailable/> Indisponível </div>
       </SeatsLegend>
 
-      <SeatsForm onSubmit={e => submit(e)} final={final}>
+      <SeatsForm onSubmit={e => submit(e)}>
         <SeatsFormItem/>
       </SeatsForm>
 

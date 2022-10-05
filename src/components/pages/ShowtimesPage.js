@@ -16,7 +16,7 @@ export default function ShowtimesPage({setInfo}) {
   }, [idFilme]);
 
   function updateInfo(date, time) {
-    setInfo(info => ({...info,"session": `${date} ${time}`}))
+    setInfo(info => ({...info, "session": `${date} ${time}`}))
   }
 
   if (showtime["id"] === undefined) {

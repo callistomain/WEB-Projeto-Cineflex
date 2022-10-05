@@ -5,11 +5,11 @@ export default function SeatsFormItem() {
     <div>
       <Field>
         <h2>Nome do comprador:</h2>
-        <input type="text" placeholder="Digite seu nome..." />
+        <input type="text" id="name" placeholder="Digite seu nome..." required />
       </Field>
       <Field>
         <h2>CPF do comprador:</h2>
-        <input type="text" placeholder="Digite seu CPF..." />
+        <input type="text" id="cpf" placeholder="Digite seu CPF..." pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" required/>
       </Field>
     </div>
   );
