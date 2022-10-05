@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 import Button from '../generics/Button';
 
-export default function SuccessPage() {
+export default function SuccessPage({info}) {
+  if (!info.final) {
+    return (
+      <div style={{"margin":"200px"}}>Você deve preencher selecionar e preencher os campos.</div>
+    );
+  }
+
   return (
     <Style>
       <h1>Pedido feito com sucesso!</h1>

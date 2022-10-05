@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Header() {
   return (
     <Style>
-      CINEFLIX
+      <Link to={"/"}>CINEFLIX</Link>
     </Style>
   );
 }
@@ -22,4 +23,7 @@ const Style = styled.header`
   align-items: center;
   background-color: #C3CFD9;
   color: #E8833A;
+  a {
+    color: inherit;
+  }
 `;

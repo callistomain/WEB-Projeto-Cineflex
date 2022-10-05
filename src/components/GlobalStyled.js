@@ -51,6 +51,10 @@ const GlobalStyled = createGlobalStyle`
     border-spacing: 0;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   * {
     box-sizing: border-box;
     padding: 0;
