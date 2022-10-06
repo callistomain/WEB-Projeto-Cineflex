@@ -7,7 +7,7 @@ import SeatsFormItem from './SeatsFormItem';
 import SeatsFooter from './SeatsFooter';
 import Loading from './Loading';
 
-const selecIndexes = [];
+let selecIndexes = [];
 export default function SeatsPage({info, setInfo}) {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [seats, setSeats] = useState({});
@@ -16,6 +16,8 @@ export default function SeatsPage({info, setInfo}) {
 
   useEffect(() => {
     const url = `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`;
+    setSelectedSeats([]);
+    selecIndexes = [];
     axios.get(url)
     .then(r => setSeats(r.data))
     .catch(e => console.log(e.response.data));

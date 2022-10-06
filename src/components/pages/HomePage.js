@@ -37,7 +37,6 @@ const Style = styled.main`
   justify-content: center;
   align-items: center;
   margin-top: 67px;
-  margin-bottom: 117px;
   padding: 32px 0;
 
   h1 {
