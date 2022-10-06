@@ -10,13 +10,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 export default function App() {
   // const [page, setPage] = useState("home");
   const [info, setInfo] = useState({
-    "final": false,
-    "title": "title",
-    "session": "date+time",
-    "seats":[],
-    "name": "name",
-    "cpf": null,
-    "history" : []
+    final: false,
+    title: "title",
+    session: "date+time",
+    seats: {},
+    selectedSeats: {},
+    history: []
   });
 
   return (

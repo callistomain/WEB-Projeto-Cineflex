@@ -11,7 +11,7 @@ export default function SuccessPage({info}) {
     );
   }
 
-  const {title, session, seats, name, cpf} = info;
+  const {title, session, seats, selectedSeats} = info;
   return (
     <Style>
       <h1>Pedido feito com sucesso!</h1>
@@ -23,12 +23,13 @@ export default function SuccessPage({info}) {
         </div>
         <div>
           <h2>Ingressos</h2>
-          {Object.values(seats).map(e => <p key={e}>Assento {e}</p>)}
-        </div>
-        <div>
-          <h2>Comprador</h2>
-          <p>Nome: {name}</p>
-          <p>CPF: {cpf}</p>
+          {seats.compradores.map((e, i) =>
+            <fieldset key={e.idAssento}>
+              <legend>Assento {selectedSeats[i].name}</legend>
+              <p>Nome: {e.nome}</p>
+              <p>CPF: {e.cpf}</p>
+            </fieldset>
+          )}
         </div>
       </section>
       <Button onClick={() => navigate("/")}>Voltar pra Home</Button>
@@ -70,6 +71,27 @@ const Style = styled.main`
     p {
       font-size: 22px;
       margin-bottom: 5px;
+    }
+
+    fieldset {
+      width: 80vw;
+      border: 3px solid black;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 24px;
+      padding-top: 10px;
+      margin-bottom: 16px;
+
+      p {
+        margin: 0;
+      }
+
+      legend {
+        font-size: 24px;
+        font-weight: bold;
+        padding: 12px;
+      }
     }
   }
 `;

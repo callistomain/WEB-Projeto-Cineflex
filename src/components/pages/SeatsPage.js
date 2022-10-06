@@ -7,8 +7,9 @@ import SeatsFormItem from './SeatsFormItem';
 import SeatsFooter from './SeatsFooter';
 import Loading from './Loading';
 
+const selecIndexes = [];
 export default function SeatsPage({info, setInfo}) {
-  const [selectedSeats, setSelectedSeats] = useState({});
+  const [selectedSeats, setSelectedSeats] = useState([]);
   const [seats, setSeats] = useState({});
   const { idSessao } = useParams();
   const navigate = useNavigate();
@@ -21,9 +22,23 @@ export default function SeatsPage({info, setInfo}) {
   }, [idSessao]);
 
   function selectSeat({id, name}) {
-    const obj = {...selectedSeats};
-    obj[id] = selectedSeats[id] ? undefined : name;
-    setSelectedSeats(obj);
+    const index = selecIndexes.indexOf(id);
+    if (index === -1) {
+      selecIndexes.push(id);
+      setSelectedSeats([...selectedSeats, {id, name}]);
+    } else {
+      let remove = true;
+      const form = document.querySelector("form");
+      const nameValue = form.elements[(index * 3) + 1].value;
+      const cpfValue = form.elements[(index * 3) + 2].value;
+      if (nameValue || cpfValue) remove = window.confirm(`Você gostaria de remover o assento ${name} e apagar seus dados?`);
+      if (remove) {
+        const obj = [...selectedSeats];
+        obj.splice(index, 1);
+        selecIndexes.splice(index, 1);
+        setSelectedSeats(obj);
+      }
+    }
   }
 
   // NOT LOADED
@@ -31,23 +46,26 @@ export default function SeatsPage({info, setInfo}) {
 
   function submit(e) {
     e.preventDefault();
-    const values = Object.values(selectedSeats).filter(e => e && e);
-    const keys = Object.keys(selectedSeats).filter(e => selectedSeats[e] && e);
+
+    const form = document.querySelector("form");
+    const seats = { ids:selecIndexes, compradores:[] };
+    selectedSeats.forEach((e, i) => {
+      const name = form.elements[(i * 3) + 1].value;
+      const cpf = form.elements[(i * 3) + 2].value;
+      const obj = { idAssento: e.id, nome: name, cpf };
+      seats.compradores.push(obj);
+    });
+
     const obj = {...info, 
-      "seats":values,
-      "final":true,
-      "name":e.target.name.value,
-      "cpf":e.target.cpf.value,
-      "history":[...info.history, `/assentos/${idSessao}`
+      seats,
+      selectedSeats,
+      final: true,
+      history: [...info.history, `/assentos/${idSessao}`
     ]};
     setInfo(obj);
     
     const url = "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many";
-    axios.post(url, {
-      ids: keys,
-      name: obj.name,
-      cpf: obj.cpf.replace(/\D/g,'')
-    })
+    axios.post(url, seats)
     .then(r => navigate("/sucesso"))
     .catch(e => console.log(e));
   }
@@ -59,7 +77,7 @@ export default function SeatsPage({info, setInfo}) {
       <SeatsStyle>
         {seats.seats.map(e => 
           (e.isAvailable)
-          ? (selectedSeats[e.id])
+          ? (selecIndexes.indexOf(e.id) !== -1)
             ? <Selected pointer={true} key={e.id} onClick={() => selectSeat(e)}>{e.name}</Selected>
             : <Available pointer={true} key={e.id} onClick={() => selectSeat(e)}>{e.name}</Available>
           : <Unavailable key={e.id}>{e.name}</Unavailable>
@@ -73,7 +91,9 @@ export default function SeatsPage({info, setInfo}) {
       </SeatsLegend>
 
       <SeatsForm onSubmit={e => submit(e)}>
-        <SeatsFormItem/>
+        {selectedSeats.map(e => 
+          <SeatsFormItem key={e.id} name={e.name}/>
+        )}
       </SeatsForm>
 
       <SeatsFooter img={seats.movie.posterURL} title={seats.movie.title}/>

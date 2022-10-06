@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-export default function SeatsFormItem() {
+export default function SeatsFormItem({name}) {
   return ( // Fieldset - legend
-    <div>
+    <Style>
+      <legend>Assento {name}</legend>
       <Field>
         <h2>Nome do comprador:</h2>
         <input type="text" id="name" placeholder="Digite seu nome..." required />
@@ -11,14 +12,32 @@ export default function SeatsFormItem() {
         <h2>CPF do comprador:</h2>
         <input type="text" id="cpf" placeholder="Digite seu CPF..." pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" required/>
       </Field>
-    </div>
+    </Style>
   );
 }
 
-const Field = styled.div`
-  padding: 0 32px;
-  width: 100vw;
+const Style = styled.fieldset`
+  width: 80vw;
+  border: 3px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   margin-bottom: 32px;
+  padding: 32px;
+  padding-top: 24px;
+
+  legend {
+    /* border: 3px solid black; */
+    /* background-color: #1aae9e; */
+    /* color: white; */
+    font-size: 24px;
+    font-weight: bold;
+    padding: 12px;
+  }
+`;
+
+const Field = styled.div`
+  width: 100%;
   
   h2 {
     margin-bottom: 4px;
