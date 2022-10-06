@@ -23,7 +23,7 @@ export default function SuccessPage({info}) {
         </div>
         <div>
           <h2>Ingressos</h2>
-          {Object.values(seats).map(e => <p>Assento {e}</p>)}
+          {Object.values(seats).map(e => <p key={e}>Assento {e}</p>)}
         </div>
         <div>
           <h2>Comprador</h2>

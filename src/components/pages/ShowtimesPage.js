@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../generics/Button';
 import axios from "axios";
 import { useParams, Link } from "react-router-dom"
+import Loading from './Loading';
 
 export default function ShowtimesPage({setInfo}) {
   const [showtime, setShowtime] = useState({});
@@ -16,14 +17,10 @@ export default function ShowtimesPage({setInfo}) {
   }, [idFilme]);
 
   function updateInfo(date, time) {
-    setInfo(info => ({...info, "session": `${date} ${time}`}))
+    setInfo(info => ({...info, "session": `${date} ${time}`, "history":[...info.history, `/sessoes/${idFilme}`]}))
   }
 
-  if (showtime["id"] === undefined) {
-    return (
-      <div>Carregando</div>
-    )
-  }
+  if (showtime["id"] === undefined) return <Loading/>;
 
   return (
     <Style>

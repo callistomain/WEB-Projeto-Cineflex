@@ -1,11 +1,28 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Button from './Button';
 
-export default function Header() {
+export default function Header({history, setInfo}) {
   const navigate = useNavigate();
+
+  function returnPage() {
+    if (!history.length) return;
+    const page = history[history.length-1];
+    const arr = [...history];
+    arr.pop();
+    setInfo(info => ({...info, "history": arr}));
+    navigate(page);
+  }
+
+  function toHome() {
+    setInfo(info => ({...info, "history": []}));
+    navigate("/");
+  }
+
   return (
     <Style>
-      <h1 onClick={() => navigate("/")}>CINEFLIX</h1>
+      <Button onClick={returnPage}>Voltar</Button>
+      <h1 onClick={toHome}>CINEFLIX</h1>
     </Style>
   );
 }
@@ -24,6 +41,11 @@ const Style = styled.header`
   align-items: center;
   background-color: #C3CFD9;
   color: #E8833A;
+
+  button {
+    position: absolute;
+    left: 10px;
+  }
 
   h1 {
     cursor: pointer;

@@ -15,13 +15,14 @@ export default function App() {
     "session": "date+time",
     "seats":[],
     "name": "name",
-    "cpf": null
+    "cpf": null,
+    "history" : []
   });
 
   return (
     <BrowserRouter>
       <GlobalStyled/>
-      <Header/>
+      <Header history={info.history} setInfo={setInfo}/>
       <Routes>
         <Route path="/" element={<HomePage setInfo={setInfo}/>} />
         <Route path="/sessoes/:idFilme" element={<ShowtimesPage setInfo={setInfo}/>} />

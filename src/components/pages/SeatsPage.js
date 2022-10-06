@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import SeatsForm from './SeatsForm';
 import SeatsFormItem from './SeatsFormItem';
 import SeatsFooter from './SeatsFooter';
+import Loading from './Loading';
 
 export default function SeatsPage({info, setInfo}) {
   const [selectedSeats, setSelectedSeats] = useState({});
@@ -26,25 +27,29 @@ export default function SeatsPage({info, setInfo}) {
   }
 
   // NOT LOADED
-  if (seats["id"] === undefined) {
-    return (
-      <div>Carregando</div>
-    )
-  }
+  if (seats["id"] === undefined) return <Loading/>;  
 
   function submit(e) {
     e.preventDefault();
-    const url = "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many";
     const values = Object.values(selectedSeats).filter(e => e && e);
     const keys = Object.keys(selectedSeats).filter(e => selectedSeats[e] && e);
-    const obj = {...info, "seats":values, "final":true, "name":e.target.name.value, "cpf":e.target.cpf.value};
+    const obj = {...info, 
+      "seats":values,
+      "final":true,
+      "name":e.target.name.value,
+      "cpf":e.target.cpf.value,
+      "history":[...info.history, `/assentos/${idSessao}`
+    ]};
     setInfo(obj);
+    
+    const url = "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many";
     axios.post(url, {
       ids: keys,
       name: obj.name,
       cpf: obj.cpf.replace(/\D/g,'')
-    }).then(r => console.log(r)).catch(e => console.log(e));
-    navigate("/sucesso");
+    })
+    .then(r => navigate("/sucesso"))
+    .catch(e => console.log(e));
   }
 
   // LOADED
