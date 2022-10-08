@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import loading from "../../assets/img/loading.gif"
 
 export default function Loading() {
   return (
     <Style>
-      Carregando
+      <img src={loading} alt="" />
     </Style>
   );
 }
@@ -17,7 +18,4 @@ const Style = styled.aside`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  font-size: 50px;
-  font-weight: bold;
 `;

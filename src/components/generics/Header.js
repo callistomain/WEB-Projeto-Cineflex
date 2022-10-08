@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Button from './Button';
+import backArrow from "../../assets/img/back-arrow.png"
 
 export default function Header({history, setInfo}) {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function Header({history, setInfo}) {
 
   return (
     <Style>
-      <Button onClick={returnPage}>Voltar</Button>
+      <img onClick={returnPage} src={backArrow} alt=""/>
       <h1 onClick={toHome}>CINEFLIX</h1>
     </Style>
   );
@@ -42,7 +42,7 @@ const Style = styled.header`
   background-color: #C3CFD9;
   color: #E8833A;
 
-  button {
+  button,img {
     position: absolute;
     left: 10px;
   }

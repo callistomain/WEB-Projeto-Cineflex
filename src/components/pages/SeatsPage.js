@@ -146,7 +146,6 @@ const Seat = styled.li`
   width: 26px;
   height: 26px;
   border-radius: 17px;
-  line-height: 0;
   user-select: none;
 `;
 
