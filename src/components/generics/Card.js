@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export default function Card({width, height, img, onClick}) {
   return (
-    <Style onClick={onClick} width={width} height={height}>
+    <Style onClick={onClick} width={width} height={height} data-identifier="movie-outdoor">
       <img src={img} alt="" />
     </Style>
   );

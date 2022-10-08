@@ -6,11 +6,11 @@ export default function SeatsFormItem({name}) {
       <legend>Assento {name}</legend>
       <Field>
         <h2>Nome do comprador:</h2>
-        <input type="text" id="name" placeholder="Digite seu nome..." required />
+        <input data-identifier="buyer-name-input" type="text" id="name" placeholder="Digite seu nome..." required />
       </Field>
       <Field>
         <h2>CPF do comprador:</h2>
-        <input type="text" id="cpf" placeholder="Digite seu CPF..." pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" required/>
+        <input data-identifier="buyer-cpf-input" type="text" id="cpf" placeholder="Digite seu CPF..." pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" required/>
       </Field>
     </Style>
   );

@@ -44,30 +44,34 @@ export default function SeatsPage({info, setInfo}) {
   }
 
   // NOT LOADED
-  if (seats["id"] === undefined) return <Loading/>;  
+  if (seats.id === undefined) return <Loading/>;  
 
   function submit(e) {
     e.preventDefault();
-
     const form = document.querySelector("form");
-    const seats = { ids:selecIndexes, compradores:[] };
+    if (form.children.length < 2) return;
+
+    const session = `${seats.day.date} ${seats.name}`;
+    const objSeats = { ids:selecIndexes, compradores:[] };
     selectedSeats.forEach((e, i) => {
       const name = form.elements[(i * 3) + 1].value;
       const cpf = form.elements[(i * 3) + 2].value;
       const obj = { idAssento: e.id, nome: name, cpf };
-      seats.compradores.push(obj);
+      objSeats.compradores.push(obj);
     });
 
     const obj = {...info, 
-      seats,
+      seats: objSeats,
+      session,
       selectedSeats,
+      title: seats.movie.title,
       final: true,
       history: [...info.history, `/assentos/${idSessao}`
     ]};
     setInfo(obj);
     
     const url = "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many";
-    axios.post(url, seats)
+    axios.post(url, objSeats)
     .then(r => navigate("/sucesso"))
     .catch(e => console.log(e));
   }
@@ -80,16 +84,16 @@ export default function SeatsPage({info, setInfo}) {
         {seats.seats.map(e => 
           (e.isAvailable)
           ? (selecIndexes.indexOf(e.id) !== -1)
-            ? <Selected pointer={true} key={e.id} onClick={() => selectSeat(e)}>{e.name}</Selected>
-            : <Available pointer={true} key={e.id} onClick={() => selectSeat(e)}>{e.name}</Available>
-          : <Unavailable key={e.id}>{e.name}</Unavailable>
+            ? <Selected data-identifier="seat" pointer={true} key={e.id} onClick={() => selectSeat(e)}>{e.name}</Selected>
+            : <Available data-identifier="seat" pointer={true} key={e.id} onClick={() => selectSeat(e)}>{e.name}</Available>
+          : <Unavailable data-identifier="seat" key={e.id}>{e.name}</Unavailable>
         )}
       </SeatsStyle>
 
       <SeatsLegend>
-        <div> <Selected/> Selecionado </div>
-        <div> <Available/> Disponível </div>
-        <div> <Unavailable/> Indisponível </div>
+        <div> <Selected data-identifier="seat-selected-subtitle"/> Selecionado </div>
+        <div> <Available data-identifier="seat-available-subtitle"/> Disponível </div>
+        <div> <Unavailable data-identifier="seat-unavailable-subtitle"/> Indisponível </div>
       </SeatsLegend>
 
       <SeatsForm onSubmit={e => submit(e)}>
@@ -98,7 +102,7 @@ export default function SeatsPage({info, setInfo}) {
         )}
       </SeatsForm>
 
-      <SeatsFooter img={seats.movie.posterURL} title={seats.movie.title}/>
+      <SeatsFooter img={seats.movie.posterURL} title={seats.movie.title} session={`${seats.day.weekday} - ${seats.name}`}/>
     </Style>
   );
 }

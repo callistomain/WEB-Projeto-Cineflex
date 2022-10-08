@@ -18,21 +18,21 @@ export default function SuccessPage({info}) {
       <section>
         <div>
           <h2>Filme e sessão</h2>
-          <p>{title}</p>
-          <p>{session}</p>
+          <p data-identifier="movie-session-infos-reserve-finished">{title}</p>
+          <p data-identifier="movie-session-infos-reserve-finished">{session}</p>
         </div>
         <div>
           <h2>Ingressos</h2>
           {seats.compradores.map((e, i) =>
             <fieldset key={e.idAssento}>
-              <legend>Assento {selectedSeats[i].name}</legend>
-              <p>Nome: {e.nome}</p>
-              <p>CPF: {e.cpf}</p>
+              <legend data-identifier="seat-infos-reserve-finished">Assento {selectedSeats[i].name}</legend>
+              <p data-identifier="buyer-infos-reserve-finished">Nome: {e.nome}</p>
+              <p data-identifier="buyer-infos-reserve-finished">CPF: {e.cpf}</p>
             </fieldset>
           )}
         </div>
       </section>
-      <Button onClick={() => navigate("/")}>Voltar pra Home</Button>
+      <Button dataIdentifier="back-to-home-btn" onClick={() => navigate("/")}>Voltar pra Home</Button>
     </Style>
   );
 }

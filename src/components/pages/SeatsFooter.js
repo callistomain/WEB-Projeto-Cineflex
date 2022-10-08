@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
-export default function SeatsFooter({img, title}) {
+export default function SeatsFooter({img, title, session}) {
   return (
     <Footer>
-      <div><img src={img} alt="" /></div>
-      <h3>{title}</h3>
+      <div data-identifier="movie-img-preview"><img src={img} alt="" /></div>
+      <h3 data-identifier="movie-and-session-infos-preview">
+        <p>{title}</p>
+        <p>{session}</p>
+      </h3>
     </Footer>
   );
 }
@@ -37,5 +40,11 @@ const Footer = styled.footer`
       width: 48px;
       height: 72px;
     }
+  }
+
+  h3 {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
 `;

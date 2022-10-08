@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 
-const Button = styled.button`
+export default function Button({children, dataIdentifier, onClick}) {
+  return (
+    <Style data-identifier={dataIdentifier} onClick={onClick}>
+      {children}
+    </Style>
+  );
+} 
+
+const Style = styled.button`
   font-family: 'Roboto', sans-serif;
   display: flex;
   align-items: center;
@@ -12,5 +20,3 @@ const Button = styled.button`
   color: white;
   cursor: pointer;
 `;
-
-export default Button;

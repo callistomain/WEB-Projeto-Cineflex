@@ -4,15 +4,16 @@ import ButtonForm from "../generics/ButtonForm";
 
 export default function SeatsForm({children, onSubmit}) {
   const [validity, setValidity] = useState(false);
+
   useEffect(() => {
     const form = document.querySelector("form");
-    setValidity(form.checkValidity());
+    if(form.children.length > 1) setValidity(form.checkValidity());
   }, [children])
 
   return (
     <Style onSubmit={onSubmit} onChange={e => setValidity(e.currentTarget.checkValidity())}>
       {children}
-       <ButtonForm valid={validity}>Reservar assento(s)</ButtonForm>
+       <ButtonForm data-identifier="reservation-btn" valid={validity}>Reservar assento(s)</ButtonForm>
     </Style>
   );
 }

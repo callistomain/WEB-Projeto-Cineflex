@@ -17,10 +17,11 @@ export default function ShowtimesPage({setInfo}) {
   }, [idFilme]);
 
   function updateInfo(date, time) {
-    setInfo(info => ({...info, "session": `${date} ${time}`, "history":[...info.history, `/sessoes/${idFilme}`]}))
+    // setInfo(info => ({...info, session: `${date} ${time}`, history:[...info.history, `/sessoes/${idFilme}`]}));
+    setInfo(info => ({...info, history:[...info.history, `/sessoes/${idFilme}`]}));
   }
 
-  if (showtime["id"] === undefined) return <Loading/>;
+  if (showtime.id === undefined) return <Loading/>;
 
   return (
     <Style>
@@ -29,11 +30,11 @@ export default function ShowtimesPage({setInfo}) {
       {
         showtime.days.map(day =>
           <Day key={day.id}>
-            <h2>{day.weekday} - {day.date}</h2>
+            <h2 data-identifier="session-date">{day.weekday} - {day.date}</h2>
             {day.showtimes.map(e => 
               <li key={e.id}>
                 <Link to={`/assentos/${e.id}`}>
-                  <Button onClick={() => updateInfo(day.date, e.name)}>{e.name}</Button>
+                  <Button onClick={() => updateInfo(day.date, e.name)} dataIdentifier="hour-minute-btn">{e.name}</Button>
                 </Link>
               </li>
             )}
@@ -42,8 +43,8 @@ export default function ShowtimesPage({setInfo}) {
       }
 
       <Footer>
-        <div><img src={showtime.posterURL} alt="" /></div>
-        <h3>{showtime.title}</h3>
+        <div data-identifier="movie-img-preview"><img src={showtime.posterURL} alt="" /></div>
+        <h3 data-identifier="movie-and-session-infos-preview">{showtime.title}</h3>
       </Footer>
     </Style>
   );
