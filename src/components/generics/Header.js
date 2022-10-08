@@ -42,9 +42,10 @@ const Style = styled.header`
   background-color: #C3CFD9;
   color: #E8833A;
 
-  button,img {
+  img {
     position: absolute;
     left: 10px;
+    cursor: pointer;
   }
 
   h1 {
